@@ -1,0 +1,63 @@
+***TASK***
+
+import net.serenitybdd.screenplay.Actor;
+import net.serenitybdd.screenplay.Task;
+import net.serenitybdd.screenplay.actions.Click;
+import net.serenitybdd.screenplay.actions.Enter;
+import net.serenitybdd.screenplay.matchers.WebElementStateMatchers;
+import net.serenitybdd.screenplay.waits.WaitUntil;
+import userinterfaces.SIGED.IndexUISiged;
+import userinterfaces.SIGED.LoginUISiged;
+
+import static net.serenitybdd.screenplay.Tasks.instrumented;
+
+✅ ¿Qué hacen estas importaciones?
+Actor y Task → Representan el actor y la tarea en el patrón Screenplay.
+Click y Enter → Acciones que el actor puede realizar (escribir texto, hacer clic).
+WaitUntil: Permite esperar hasta que un elemento cumpla cierta condición.
+WebElementStateMatchers: Usado para validar estados de elementos en pantalla.
+
+IndexUISiged y LoginUISiged → Son clases personalizadas que contienen los localizadores de los elementos en la UI.
+instrumented → Se usa para crear tareas de forma segura en Serenity BDD.
+
+
+***public class LoguearTaskSiged implements Task {
+LoguearTaskSiged es una tarea (Task) que se ejecutará dentro de una prueba automatizada.
+Extiende la interfaz Task, lo que significa que es una acción que un actor puede realizar.
+
+***private final String usuario;
+   private final String password;
+
+Se definen dos variables privadas y finales (usuario y password) para almacenar las credenciales.
+
+***public LoguearTaskSiged(String usuario, String password) {
+       this.usuario = usuario;
+       this.password = password;
+   }
+
+Constructor: Recibe el usuario y la contraseña como parámetros y los almacena en los atributos.
+
+***@Override
+   public <T extends Actor> void performAs(T actor) {
+performAs es el método donde se define la secuencia de acciones que el actor debe ejecutar.
+
+***actor.attemptsTo(Enter.theValue(usuario).into(LoginUISiged.INPUT_TEXT_USER));
+✅ Acción: Escribir el usuario en el campo de entrada (INPUT_TEXT_USER).
+
+***actor.attemptsTo(Enter.theValue(password).into(LoginUISiged.INPUT_TEXT_PASSWORD));
+✅ Acción: Escribir la contraseña en el campo correspondiente (INPUT_TEXT_PASSWORD).
+
+***actor.attemptsTo(Click.on(LoginUISiged.BUTTON_INICIAR_SESION));
+✅ Acción: Hacer clic en el botón de iniciar sesión (BUTTON_INICIAR_SESION).
+
+***WaitUntil.the(IndexUISiged.VALID_TEXT_USER, WebElementStateMatchers.isVisible())
+           .forNoMoreThan(20).seconds();
+✅ Acción: Esperar hasta que el elemento VALID_TEXT_USER sea visible en la página de inicio.
+Esto indica que la sesión ha sido iniciada correctamente.
+Si el elemento no aparece en 20 segundos, la prueba fallará.
+
+***public static LoguearTaskSiged inicioSesion(String usuario, String password){
+    return instrumented(LoguearTaskSiged.class, usuario, password);
+}
+Método de fábrica: Permite instanciar la tarea LoguearTaskSiged sin necesidad de usar new.
+instrumented: Garantiza que la instancia de la tarea se cree correctamente dentro del framework Serenity.

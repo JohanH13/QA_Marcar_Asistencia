@@ -1,0 +1,66 @@
+📌 Diferencia entre Dependencias y Plugins en Maven
+🔹 Concepto
+¿Qué es?
+🔹 Dependencias (<dependency>)
+Librerías externas necesarias en tiempo de ejecución o compilación.
+🔹Plugins (<plugin>)
+Herramientas que amplían las funcionalidades de Maven.
+
+¿Dónde se usan?
+🔹 Dependencias (<dependency>)
+En <dependencies> dentro del pom.xml.
+🔹Plugins (<plugin>)
+En <build><plugins> dentro del pom.xml.
+
+¿Para qué sirve?
+🔹 Dependencias (<dependency>)
+Proveer clases y funcionalidades a la aplicación.
+🔹Plugins (<plugin>)
+Ejecutar tareas específicas como compilación, pruebas, empaquetado y despliegue.
+
+Ejemplo de uso
+🔹 Dependencias (<dependency>)
+JUnit, Selenium, Spring Boot, Cucumber.
+🔹Plugins (<plugin>)
+Maven Compiler Plugin, Surefire Plugin, Shade Plugin.
+
+¿Cuándo se ejecutan?
+🔹 Dependencias (<dependency>)
+Durante la ejecución o compilación del código.
+🔹Plugins (<plugin>)
+Solo cuando se ejecutan comandos Maven específicos.
+
+📌 Resumen Final
+📌 Dependencias: Son bibliotecas externas necesarias para el código.
+📌 Plugins: Son herramientas que extienden Maven para realizar tareas específicas.
+🚀 Ambos son esenciales en un proyecto Maven, pero tienen propósitos diferentes.
+
+
+📌 Ejemplos en pom.xml
+✅ Ejemplo de una Dependencia (serenity-core)
+Esta dependencia proporciona clases y funcionalidades para usar en el código:
+
+<dependencies>
+    <dependency>
+        <groupId>net.serenity-bdd</groupId>
+        <artifactId>serenity-core</artifactId>
+        <version>${serenity-version}</version>
+    </dependency>
+</dependencies>
+
+✅ Ejemplo de un Plugin (maven-compiler-plugin)
+Este plugin configura la versión de Java usada para compilar:
+
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.8.1</version>
+            <configuration>
+                <source>17</source>   <!-- Versión de Java fuente -->
+                <target>17</target>   <!-- Versión de Java destino -->
+            </configuration>
+        </plugin>
+    </plugins>
+</build>

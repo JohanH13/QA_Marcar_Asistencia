@@ -1,0 +1,43 @@
+Selenium:
+
+theActorInTheSpotlight().wasAbleTo(Open.url(urlsiged));
+
+theActorInTheSpotlight() obtiene el actor actualmente en escena (el usuario que ejecuta las pruebas).
+.wasAbleTo(Open.url(urlsiged)) indica que el actor puede abrir la URL especificada (urlsiged) en el navegador.
+getDriver().manage().window().maximize();
+
+getDriver() obtiene la instancia del navegador WebDriver.
+.manage().window().maximize(); maximiza la ventana del navegador para evitar problemas de visualización.
+System.out.println("LA url es:" + urlsiged);
+
+Imprime en la consola la URL que se está abriendo, útil para depuración.
+System.out.println("nombre del actor" + OnStage.theActorInTheSpotlight().getName());
+
+Muestra en consola el nombre del actor en escena.
+OnStage.theActorInTheSpotlight().getName() obtiene el nombre del actor.
+comOBJ.delay(1);
+
+comOBJ parece ser una instancia de una clase personalizada.
+.delay(1) indica que probablemente introduce un retraso de 1 segundo en la ejecución (tal vez usa Thread.sleep(1000)).
+Este código es parte de un flujo de automatización de pruebas con Serenity BDD y Selenium, donde un actor (usuario de prueba) abre una URL, maximiza la ventana, imprime información relevante y aplica un pequeño retraso.
+
+
+1️⃣ theActorInTheSpotlight().attemptsTo(LoguearTaskSiged.inicioSesion(user,password));
+theActorInTheSpotlight() obtiene el actor que actualmente está en escena.
+.attemptsTo(...) indica que el actor intenta realizar una tarea (acción).
+
+LoguearTaskSiged.inicioSesion(user, password) es una tarea definida en el framework Serenity BDD.
+Probablemente es una clase de tipo Task que implementa Task y utiliza Performable de Serenity.
+La tarea inicioSesion(user, password) recibe los parámetros user y password, lo que sugiere que el actor está intentando iniciar sesión en una aplicación.
+📌 Conclusión: Esta línea hace que el actor (usuario de prueba) intente iniciar sesión con el usuario y contraseña proporcionados.
+
+2️⃣ System.out.println("loguearComoUsusarioYComoPassword");
+Imprime en consola el mensaje "loguearComoUsusarioYComoPassword".
+Probablemente se usa para depuración, indicando que se ha ejecutado la acción de login.
+
+🔎 Resumen
+Este fragmento de código realiza una prueba automatizada donde un actor intenta iniciar sesión en un sistema usando una tarea (LoguearTaskSiged.inicioSesion(user,password)) y luego imprime un mensaje en la consola para confirmar la ejecución.
+
+
+
+
