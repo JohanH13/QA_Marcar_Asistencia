@@ -14,6 +14,7 @@ public class IndexUI extends PageObject {
             the("Salir Sesion").
             locatedBy("//a[@href='/marcacion/login.aspx']");
 
+<<<<<<< HEAD
     public static final Target BUTTON_ENTRADA = Target.
             the("Entrada").
             locatedBy("//input[@id='ctl00_body_inpbutEntrada']");
@@ -29,5 +30,7 @@ public class IndexUI extends PageObject {
     public static final Target BUTTON_SALIDA = Target.
             the("Entrada").
             locatedBy("//input[@id='ctl00_body_inpbutSalida']");
+=======
+>>>>>>> 46b0a9355bc83e00c98592e6b87a08a4448f35bf
 
 }

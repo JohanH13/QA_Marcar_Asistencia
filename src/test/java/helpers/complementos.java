@@ -3,6 +3,10 @@ package helpers;
 public class complementos {
 
     public complementos() {
+<<<<<<< HEAD
+=======
+
+>>>>>>> 46b0a9355bc83e00c98592e6b87a08a4448f35bf
     }
     public void delay (long tiempo) {
         try {
@@ -13,5 +17,8 @@ public class complementos {
         }
     }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 46b0a9355bc83e00c98592e6b87a08a4448f35bf
 }

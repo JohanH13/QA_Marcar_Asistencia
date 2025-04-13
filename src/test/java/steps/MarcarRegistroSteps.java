@@ -12,7 +12,6 @@ import net.serenitybdd.screenplay.actors.OnlineCast;
 import tasks.LogoutTask;
 import tasks.LoguearTask;
 import tasks.MarcarTask;
-
 import static net.serenitybdd.screenplay.actors.OnStage.theActorInTheSpotlight;
 import static net.thucydides.core.webdriver.ThucydidesWebDriverSupport.getDriver;
 
