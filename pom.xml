@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.automate.qa</groupId>
+    <artifactId>QA_Marcar_Asistencia</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <serenity-version>4.2.17</serenity-version>
+        <slf4j-version>2.0.9</slf4j-version>
+        <cucumber-version>7.21.1</cucumber-version>
+        <junit-version>4.13.2</junit-version>
+
+        <maven-surefire-plugins-version>3.5.2</maven-surefire-plugins-version>
+        <maven-failsafe-plugins-version>3.5.2</maven-failsafe-plugins-version>
+        <maven-compiler-plugin-version>3.14.0</maven-compiler-plugin-version>
+        <maven-resources-plugins-version>3.3.1</maven-resources-plugins-version>
+        <serenity-maven-plugin-version>4.2.17</serenity-maven-plugin-version>
+
+    </properties>
+    <dependencies>
+        <!-- Es la base de Serenity BDD. Permite la integración con WebDriver,
+        Cucumber, JUnit, entre otros. || ES ESENCIAL
+        Proporciona funciones esenciales para ejecutar pruebas y generar reportes.-->
+        <dependency>
+            <groupId>net.serenity-bdd</groupId>
+            <artifactId>serenity-core</artifactId>
+            <version>${serenity-version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-simple</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>net.serenity-bdd</groupId>
+                    <artifactId>serenity-junit</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- Integra Serenity con Cucumber para pruebas BDD usando Gherkin -->
+        <dependency>
+            <groupId>net.serenity-bdd</groupId>
+            <artifactId>serenity-cucumber</artifactId>
+            <version>${serenity-version}</version>
+        </dependency>
+
+        <!-- Proporciona soporte para JUnit en Serenity. -->
+        <dependency>
+            <groupId>net.serenity-bdd</groupId>
+            <artifactId>serenity-junit</artifactId>
+            <version>${serenity-version}</version>
+        </dependency>
+
+        <!-- Es el módulo para usar el patrón Screenplay en pruebas con WebDriver,
+        mejora la organización y reutilización del código en pruebas de automatización web-->
+        <dependency>
+            <groupId>net.serenity-bdd</groupId>
+            <artifactId>serenity-screenplay-webdriver</artifactId>
+            <version>${serenity-version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>net.serenity-bdd</groupId>
+                    <artifactId>serenity-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- Genera reportes de pruebas en una sola página HTML. -->
+        <dependency>
+            <groupId>net.serenity-bdd</groupId>
+            <artifactId>serenity-single-page-report</artifactId>
+            <version>${serenity-version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>net.serenity-bdd</groupId>
+                    <artifactId>serenity-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- Núcleo de Cucumber, maneja la ejecución de las pruebas escritas en Gherkin. -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-core</artifactId>
+            <version>${cucumber-version}</version>
+        </dependency>
+
+
+        <!-- Permite escribir pruebas en Java usando Cucumber
+        (esencial para definir los Step Definitions).-->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>${cucumber-version}</version>
+        </dependency>
+
+        <!-- Permite ejecutar pruebas de Cucumber con JUnit. -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-junit</artifactId>
+            <version>${cucumber-version}</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- Es la biblioteca estándar de pruebas unitarias -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit-version}</version>
+            <scope>test</scope>
+        </dependency>
+
+
+        <!-- Es un logger simple para ver mensajes en consola -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j-version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugins-version}</version>
+                <configuration>
+                    <includes>
+                        <include>**/Runner*.java</include>
+                    </includes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${maven-failsafe-plugins-version}</version>
+                <configuration>
+                    <includes>
+                        <include>**/test/**/*.java</include>
+                    </includes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin-version}</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>${maven-resources-plugins-version}</version>
+            </plugin>
+
+            <plugin>
+                <groupId>net.serenity-bdd.maven.plugins</groupId>
+                <artifactId>serenity-maven-plugin</artifactId>
+                <version>${serenity-version}</version>
+                <executions>
+                    <execution>
+                        <id>serenity-reports</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>aggregate</goal>
+                            <goal>reports</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+
+</project>

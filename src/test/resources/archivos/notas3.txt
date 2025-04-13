@@ -1,0 +1,184 @@
+📌 Serenity Core y Cucumber
+✅ serenity-core
+Es la base de Serenity y proporciona la integración con Selenium.
+
+✅ serenity-cucumber
+Integra Serenity con Cucumber para pruebas BDD usando Gherkin.
+
+✅ serenity-junit
+Proporciona soporte para JUnit en Serenity.
+
+serenity-screenplay-webdriver
+
+¿Para qué sirve? Es el módulo para usar el patrón Screenplay en pruebas con WebDriver.
+¿Se puede quitar? ⚠️ Solo si no usas el patrón Screenplay en Serenity.
+
+JUnit y Cucumber
+✅ junit
+
+¿Para qué sirve? Es la biblioteca estándar de pruebas unitarias.
+¿Se puede quitar? ⚠️ Si usas solo cucumber-junit, podrías omitirlo.
+✅ cucumber-java, cucumber-core, cucumber-junit
+
+¿Para qué sirven?
+cucumber-java: Permite escribir pruebas en Cucumber con Java.
+cucumber-core: Es el núcleo de Cucumber.
+cucumber-junit: Permite ejecutar Cucumber con JUnit.
+¿Se pueden quitar? ❌ No, son necesarias para Cucumber.
+
+ Reportes
+✅ serenity-single-page-report
+
+¿Para qué sirve? Genera reportes de pruebas en una sola página HTML.
+¿Se puede quitar? ⚠️ Solo si no necesitas reportes en HTML.
+❌ (Comentado) serenity-json-summary-report
+
+¿Para qué sirve? Genera reportes en JSON.
+¿Se puede quitar? ✅ Sí, ya está comentado.
+
+------------------------------------------------------------------------------------------
+1️⃣ maven-surefire-plugin
+📌 Función:
+Se usa para ejecutar pruebas unitarias con JUnit o TestNG.
+Solo ejecuta pruebas que no sean de integración.
+📌 Función: Ejecuta pruebas unitarias en Maven.
+✅ Se usa para ejecutar JUnit y Cucumber con Serenity.
+
+🔹 ¿Qué hace esta configuración?
+Ejecuta solo las clases que contienen Runner en su nombre (EjecutorRunner.java).
+Se usa para pruebas unitarias con JUnit.
+
+2️⃣ maven-failsafe-plugin
+📌 Función:
+Se usa para ejecutar pruebas de integración (integration-test y verify).
+Permite fallos sin detener todo el proceso.
+📌 Función: Ejecuta pruebas de integración (ejemplo: pruebas con Selenium y Serenity).
+✅ Se usa cuando las pruebas dependen de otros sistemas o bases de datos.
+
+✅ ¿Debes mantenerlo?
+Sí, si tienes pruebas de integración.
+Si solo haces pruebas unitarias, puedes eliminarlo.
+🔹 ¿Qué hace esta configuración?
+
+Ejecuta pruebas de integración (como tests en navegadores con Selenium).
+Usa integration-test y verify para validar que todas las pruebas pasaron correctamente.
+🚨 Diferencia con surefire
+
+surefire → Ejecuta pruebas unitarias.
+failsafe → Ejecuta pruebas de integración (tests completos con Selenium y Serenity).
+
+Este plugin está pensado para ejecutar pruebas de integración, pero las pruebas en Serenity y Cucumber generalmente se ejecutan con surefire, no con failsafe.
+Si usas pruebas de integración reales (por ejemplo, con API o BD), puedes mantenerlo, pero su configuración parece más orientada a ejecutar tests de integración tradicionales, no necesariamente con Serenity.
+
+Elimina surefire.security.manager porque el SecurityManager está eliminado desde Java 17.
+
+
+
+3️⃣ maven-compiler-plugin
+📌 Función:
+
+Se usa para compilar el código fuente en Java.
+Define las versiones del compilador (source y target).
+🔹 ¿Qué hace esta configuración?
+
+Define la versión de Java para compilar tu código (maven.compiler.source y maven.compiler.target).
+Evita errores si usas características modernas de Java (como Java 17 o 21).
+✅ ¿Debes mantenerlo?
+Sí, es obligatorio para compilar el código en la versión correcta de Java.
+
+4️⃣ maven-resources-plugin
+📌 Función: Copia y procesa archivos dentro del proyecto (ej. .properties, config.json).
+📌 Configuración en tu pom.xml:
+
+🔹 ¿Qué hace esta configuración?
+Copia archivos de recursos (src/main/resources y src/test/resources).
+Es útil para cargar archivos de configuración en las pruebas de Serenity.
+Se usa para configurar valores en application.properties o application.yml.
+
+✔ Correcto. Lo usas para manejar archivos de recursos, aunque en un proyecto básico con Serenity y Cucumber no es obligatorio.
+✅ ¿Debes mantenerlo?
+Sí, es recomendable si usas archivos de configuración en resources/.
+Si no usas archivos en resources/, puedes eliminarlo.
+
+5️⃣ serenity-maven-plugin
+📌 Función: Genera los reportes de Serenity después de las pruebas.
+📌 Configuración en tu pom.xml:
+
+🔹 ¿Qué hace esta configuración?
+Genera reportes de pruebas automáticos después de ejecutar mvn verify.
+aggregate → Consolida los resultados de todas las pruebas en un reporte HTML.
+reports → Crea un informe detallado de los escenarios de Cucumber con capturas de pantalla y tiempos.
+✔ Correcto. Se ejecuta en post-integration-test, lo cual es el lugar adecuado para generar los reportes después de la ejecución de pruebas.
+✅ ¿Debes mantenerlo?
+Sí, si usas Serenity BDD para pruebas y reportes.
+Si no necesitas reportes de Serenity, puedes eliminarlo.
+
+
+💡 Para ver los reportes de Serenity:
+Ejecuta en terminal:
+mvn clean verify
+Luego, abre el reporte en:
+📂 target/site/serenity/index.html
+
+
+🎯 Resumen final
+Plugin	Función
+maven-surefire-plugin	Ejecuta pruebas unitarias con JUnit y Cucumber.
+maven-failsafe-plugin	Ejecuta pruebas de integración (Serenity, Selenium).
+maven-compiler-plugin	Compila el código Java según la versión definida.
+maven-resources-plugin	Copia archivos de configuración (.properties, .json).
+serenity-maven-plugin	Genera reportes de Serenity BDD.
+🚀 Conclusión:
+✅ Sí necesitas todos estos plugins porque manejas Serenity, Cucumber y Selenium.
+✅ JUnit es obligatorio para ejecutar CucumberWithSerenity.class.
+✅ Los reportes de Serenity solo se generan con serenity-maven-plugin.
+
+¡Listo! Ahora tienes claro para qué sirve cada uno. 🔥
+
+
+📌 Resumen
+Carpeta/Paquete	Función
+runners 	Ejecuta las pruebas con Serenity + JUnit
+steps	    Define los pasos (@Given, @When, @Then)
+tasks	    Implementa acciones del usuario (Task)
+questions	Valida resultados (Question<T>)
+ui	        Define los elementos de la UI (PageObjects)
+features	Contiene los escenarios en Gherkin (.feature)
+archivos	Datos auxiliares para pruebas (CSV, JSON, etc.)
+helpers	    Métodos de utilidad reutilizables
+pom.xml	Maneja dependencias de Maven
+serenity.properties	Configuración del framework
+Con esta estructura, tu proyecto será más organizado, modular y mantenible 🚀.
+
+
+ejemplos
+
+public static final Target INPUT_TEXT_PROCESO = Target.
+            the("Campo para ingresar el proceso de Comunicaciones Externas").
+            locatedBy("#objDocumento\\.expediente\\.proceso\\.idproceso");
+public static final Target VALID_BUTTON_REGISTRO_DOCUMENTO = Target.
+            the("Validar que el ususario ha ingresado al SIGED antiguo").
+            locatedBy("//span[@id='btnRegistrarDocumentoTop_label']");
+public static final Target VALIDAR_REGISTRO_CLIENTE = Target.
+            the("Validar que se registró el cliente").
+            locatedBy("//input[@id='objDocumento.expediente.cliente.numeroIdentificacion']");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

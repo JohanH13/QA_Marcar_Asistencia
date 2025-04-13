@@ -1,0 +1,163 @@
+Serenity BDD se integra con Cucumber y JUnit para ejecutar pruebas.
+
+🔹 JUnit actúa como el ejecutor de los escenarios de Cucumber.
+🔹 Serenity se encarga del reporte automático y la integración con Selenium.
+🔹 Cucumber maneja la definición de escenarios en Gherkin.
+
+💡 Sin JUnit, no puedes ejecutar las pruebas con @RunWith(CucumberWithSerenity.class)
+
+¿Qué es JUnit?
+JUnit es un framework de pruebas unitarias para Java. Se usa para escribir y ejecutar pruebas automatizadas en proyectos Java.
+Cuando usas Cucumber con Serenity, JUnit se usa como el motor de ejecución de los tests. Es decir, JUnit ejecuta las pruebas Cucumber
+JUnit es necesario para que Serenity pueda ejecutar Cucumber, ya que Serenity usa CucumberWithSerenity.class, que extiende Cucumber, y este a su vez se ejecuta con JUnit.
+
+🔹 JUnit actúa como el ejecutor de los escenarios de Cucumber.
+🔹 Serenity se encarga del reporte automático y la integración con Selenium.
+🔹 Cucumber maneja la definición de escenarios en Gherkin.
+
+💡 Sin JUnit, no puedes ejecutar las pruebas con @RunWith(CucumberWithSerenity.class).
+
+Cucumber
+✅ ¿Qué es?
+Cucumber se usa para escribir pruebas en un lenguaje entendible por usuarios no técnicos (.feature), usando Gherkin.
+
+Es un framework de pruebas basado en BDD (Behavior Driven Development).
+Usa lenguaje natural para escribir pruebas en formato Gherkin.
+Permite escribir escenarios en un formato fácil de leer.
+✅ ¿Para qué sirve?
+Usa archivos .feature para definir escenarios de prueba.
+Describir pruebas en un lenguaje cercano al usuario.
+Convertir las pruebas en código ejecutable (con Java y Selenium, por ejemplo).
+✅ ¿Es obligatorio?
+
+Sí, si quieres escribir pruebas en lenguaje Gherkin.
+No, si prefieres escribir pruebas directamente en Java con Selenium y Serenity.
+
+Serenity
+✅ ¿Qué es?
+Es un framework de automatización basado en Selenium que facilita la generación de reportes detallados y el uso de patrones avanzados como Screenplay.
+Es una herramienta de automatización de pruebas que genera reportes detallados.
+Se integra con Selenium y Cucumber para mejorar la ejecución y visualización de pruebas.
+✅ ¿Para qué sirve?
+
+Facilitar la escritura de pruebas con menos código repetitivo.
+Generar reportes gráficos y detallados de la ejecución de pruebas.
+Integrarse con herramientas como JUnit, Cucumber y Selenium.
+✅ ¿Es obligatorio?
+
+No, pero es muy útil si quieres reportes detallados y mejor organización de pruebas.
+
+Selenium
+✅ ¿Qué es?
+
+Es un framework de automatización de pruebas para navegadores web.
+Permite interactuar con páginas web como si fuera un usuario real (hacer clic, escribir, verificar elementos, etc.).
+Permite interactuar con elementos web como botones, formularios, etc.
+Se usa en lenguajes como Java, Python y C#.
+Necesita controladores como ChromeDriver, GeckoDriver, etc.
+
+✅ ¿Para qué sirve?
+
+Automatizar interacciones en páginas web.
+Realizar pruebas de interfaz gráfica (UI Testing).
+Validar el comportamiento de una web en diferentes navegadores.
+✅ ¿Es obligatorio?
+
+Sí, si quieres automatizar pruebas en un navegador web.
+No, si solo haces pruebas unitarias o de API sin interfaz web.
+
+Gherkin
+✅ ¿Qué es?
+
+Es un lenguaje estructurado que usa Cucumber para escribir escenarios de prueba en lenguaje natural.
+Usa palabras clave como Given, When, Then para definir pasos.
+✅ Ejemplo de Gherkin:
+Feature: Login en la plataforma
+  Scenario: Usuario inicia sesión con credenciales válidas
+    Given el usuario está en la página de login
+    When ingresa su usuario "test" y contraseña "1234"
+    Then debería ver el mensaje "Inicio de sesión exitoso"
+✅ ¿Para qué sirve?
+
+Hacer que las pruebas sean fáciles de entender para cualquier persona.
+Escribir casos de prueba de manera estructurada.
+✅ ¿Es obligatorio?
+
+Sí, si usas Cucumber, porque Cucumber necesita Gherkin para definir los escenarios.
+No, si usas solo Selenium y Java sin Cucumber.
+
+Screenplay 🎭
+📌 ¿Qué es?
+Es un patrón de diseño dentro de Serenity que permite estructurar pruebas de forma más mantenible y reutilizable.
+
+📌 ¿Para qué sirve?
+
+Usa "actores" que realizan "tareas" y "interacciones" en la prueba.
+Evita que las pruebas dependan directamente de Selenium, haciéndolas más flexibles.
+🔹 Ejemplo sin Screenplay:
+
+driver.findElement(By.id("login")).click();
+🔹 Ejemplo con Screenplay:
+
+theActor.attemptsTo(Click.on(LoginPage.LOGIN_BUTTON));
+
+
+
+LoginStepDefinitions
+Aquí implementamos los pasos de la prueba usando Serenity y Cucumber:
+
+ @Steps
+    LoginPage loginPage;
+
+    @Given("el usuario está en la página de login")
+    public void elUsuarioEstaEnLaPaginaDeLogin() {
+        loginPage.open();
+    }
+
+    @When("ingresa su usuario {string} y contraseña {string}")
+    public void ingresaSuUsuarioYContraseña(String usuario, String contraseña) {
+        loginPage.enterUsername(usuario);
+        loginPage.enterPassword(contraseña);
+        loginPage.clickLogin();
+    }
+
+Runner - EjecutorRunner.java
+Este archivo ejecuta las pruebas con JUnit y Serenity:
+
+package runner;
+
+import io.cucumber.junit.CucumberOptions;
+import net.serenitybdd.cucumber.CucumberWithSerenity;
+import org.junit.runner.RunWith;
+
+@RunWith(CucumberWithSerenity.class)
+@CucumberOptions(
+        features = "src/test/resources/features/login.feature",
+        glue = {"stepdefinitions"},
+        tags = "@Login",
+        snippets = CucumberOptions.SnippetType.CAMELCASE
+)
+public class EjecutorRunner {
+}
+
+Resumen
+✅ Cucumber + Gherkin → Define los escenarios de prueba en lenguaje natural.
+✅ Serenity + Selenium → Automatiza la prueba en el navegador.
+✅ JUnit → Ejecuta las pruebas con Cucumber y Serenity.
+
+¿Por qué usar Target en vez de @FindBy?
+✅ Más flexibilidad: Target permite definir localizadores sin depender del modelo de PageFactory.
+✅ Mejor integración con Serenity: Usa Target junto con Serenity WebElementFacade, lo que facilita la espera implícita.
+✅ Código más limpio: Evita inicializaciones innecesarias de elementos.
+
+
+✅ Usa Target si trabajas con Serenity y Screenplay.
+✅ Usa @FindBy solo si usas Serenity con el patrón tradicional de Page Object.
+🚀 Si estás usando Serenity con Screenplay, definitivamente Target es la mejor opción.
+
+Selenium → Ejecuta pruebas en el navegador.
+Serenity → Facilita el uso de Selenium y genera reportes.
+Screenplay → Organiza las pruebas de forma más estructurada.
+Cucumber → Permite escribir pruebas en lenguaje natural.
+Gherkin → Es el lenguaje que usa Cucumber para describir los casos de prueba.
+🚀 Juntos, crean un framework poderoso para automatizar pruebas de software de manera estructurada y fácil de entender.

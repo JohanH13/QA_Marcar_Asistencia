@@ -1,0 +1,42 @@
+****TEST RUNNERS****
+import io.cucumber.junit.CucumberOptions;
+import net.serenitybdd.cucumber.CucumberWithSerenity;
+import org.junit.runner.RunWith;
+
+*io.cucumber.junit.CucumberOptions:
+Se usa para configurar las opciones de Cucumber, como la ubicación de los archivos .feature, los paquetes donde están los step definitions, los tags a ejecutar, etc.
+
+*net.serenitybdd.cucumber.CucumberWithSerenity:
+Permite ejecutar Cucumber con el framework Serenity BDD, que proporciona reportes avanzados y manejo de pruebas.
+
+*Org.junit.runner.RunWith:
+Es una anotación de JUnit que indica con qué clase se ejecutará la prueba.
+
+
+**@RunWith(CucumberWithSerenity.class)
+Indica que esta clase se ejecutará con Serenity y Cucumber.
+CucumberWithSerenity.class extiende el runner de Cucumber, pero con integración a Serenity para generación de reportes.
+
+**@CucumberOptions(
+          features = "src/test/resources/features/marcarRegistro.feature",
+          glue = {"steps"},
+          tags = "@MarcarRegistro",
+          snippets = CucumberOptions.SnippetType.CAMELCASE
+  )
+
+features = "src/test/resources/features/marcarRegistro.feature"
+
+Especifica la ubicación del archivo .feature que contiene los escenarios de prueba.
+glue = {"steps"}
+
+Define el paquete donde están los step definitions, en este caso, en la carpeta steps.
+tags = "@MarcarRegistro"
+
+Ejecuta solo los escenarios que tengan el tag @MarcarRegistro en el archivo .feature.
+snippets = CucumberOptions.SnippetType.CAMELCASE
+
+Indica que los métodos de los step definitions se generarán con nombres en CamelCase, es decir:
+@Cuando("el usuario marca el registro")
+public void elUsuarioMarcaElRegistro() {
+    // Código aquí
+}

@@ -1,0 +1,37 @@
+En un proyecto de automatización con Selenium y Screenplay, lo ideal es que la mayor parte del código (como tasks, interactions, questions y userinterfaces) esté dentro de test/java en lugar de main/java.
+
+¿Por qué?
+Código de automatización ≠ Código de producción:
+
+src/main/java suele usarse para código de la aplicación en sí (si fuera un sistema en desarrollo).
+src/test/java se usa para código de pruebas, como es tu caso.
+Separación de responsabilidades:
+
+Si tu código de automatización está en main/java, Maven o cualquier herramienta de construcción podría incluirlo en la compilación del proyecto como si fuera código de producción.
+Manteniéndolo en test/java, se ejecutará solo en contexto de pruebas.
+
+¿Cómo reorganizarlo?
+Mueve las carpetas questions, task.SIGED y userinterfaces a test/java.
+La estructura correcta quedaría así:
+
+test
+├── java
+│   ├── questions
+│   ├── tasks
+│   ├── userinterfaces
+│   │   ├── SIGED
+│   │   ├── SPJC
+│   │   ├── SYM
+│   ├── runner
+│   ├── stepdefinitions
+│   ├── Complements (o utils/helpers)
+├── resources
+│   ├── archivos
+│   ├── features
+
+Excepción: ¿Cuándo usar main/java?
+Si tienes una librería común que se usa tanto en pruebas como en desarrollo, podrías ubicarla en main/java. Pero en tu caso, dado que es solo automatización de pruebas, todo debe ir en test/java.
+
+🔹 Conclusión: Sí, lo mejor es usar test/java y no main/java. Mueve las carpetas y estarás alineado con las mejores prácticas.
+
+
